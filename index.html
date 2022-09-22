@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="stylesheet.css" />
+  <title>Cyber Knowledge</title>
+
+</head>
+
+<body>
+	<div class="video">
+	<video controls autoplay width="640" height="480">
+		<source src="Módulo 1_ Email Do_s and Dont_s.mp4" type="video/mp4" />
+	</video>
+</div>
+    <div class="preguntasportema"> 
+<fieldset>
+	<legend>Cuestionario Email Do's and Don'ts</legend>
+	<div id="test">
+		<div class="cuestion">1.“Confiar solo en el nombre del remitente”. ¿La acci&oacute;n anterior corresponde a algo que debe hacerse?</div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="0" value="a">&nbsp;a : No debe hacerse.&nbsp;</label>
+			<label>
+				<input type="radio" name="0" value="b">&nbsp;b : Debe hacerse.&nbsp;</label>
+			<label>
+				<input type="radio" name="0" value="c">&nbsp;c : Solo en ciertos casos.&nbsp;</label>
+		</div>
+		<div class="cuestion">“Se oculta la verdadera extensi&oacute;n (por lo general es un .exe) por medio de muchos espacios. El usuario podr&aacute; notarlo si hay puntos suspensivos en el nombre del documento.” El siguiente m&eacute;todo de engaño corresponde a:
+        </div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="1" value="a">&nbsp;a : Uso de espacios para ocultar la extensi&oacute;n.&nbsp;</label>
+			<label>
+				<input type="radio" name="1" value="b">&nbsp;b : Ficheros ofim&aacute;ticos con macros.&nbsp;</label>
+			<label>
+				<input type="radio" name="1" value="c">&nbsp;c : Enlaces da&nacute;inos.&nbsp;</label>
+		</div>
+		<div class="cuestion">3. “Tener todos los sistemas actualizados y con antivirus”. ¿La acci&oacute;n anterior corresponde a algo que debe hacerse?</div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="2" value="a">&nbsp;a : No debe hacerse.&nbsp;</label>
+			<label>
+				<input type="radio" name="2" value="b">&nbsp;b : Debe hacerse.&nbsp;</label>
+			<label>
+				<input type="radio" name="2" value="c">&nbsp;c : Solo en ciertos casos.&nbsp;</label>
+		</div>
+	</div>
+	<button id="boton">Mostrar resultado</button>
+	<div id="resultado">
+		<br>
+	</div>
+	<script>
+		const contenedor = document.getElementById("test");
+		const botonRes = document.getElementById("boton");
+		const resultadoTest = document.getElementById("resultado");
+
+		const preguntas = [
+			{
+				pregunta: "1. “Confiar solo en el nombre del remitente”. ¿La acción anterior corresponde a algo que debe hacerse?",
+				respuestas:
+				{
+					a: "No debe hacerse.",
+					b: "Debe hacerse.",
+					c: "Solo en ciertos casos.",
+				},
+				respuestaCorrecta: "a",
+			},
+			{
+				pregunta: "2. “Se oculta la verdadera extensión (por lo general es un .exe) por medio de muchos espacios. El usuario podrá notarlo si hay puntos suspensivos en el nombre del documento.” El siguiente método de engaño corresponde a:",
+				respuestas:
+				{
+					a: "Uso de espacios para ocultar la extensión.",
+					b: "Ficheros ofimáticos con macros.",
+					c: "Enlaces dañinos.",
+				},
+				respuestaCorrecta: "a",
+			},
+			{
+				pregunta: "3. “Tener todos los sistemas actualizados y con antivirus”. ¿La acción anterior corresponde a algo que debe hacerse?",
+				respuestas:
+				{
+					a: "No debe hacerse.",
+					b: "Debe hacerse.",
+					c: "Solo en ciertos casos.",
+				},
+				respuestaCorrecta: "b",
+			},
+
+		];
+
+		function mostrarTest()
+		{
+			const preguntasYrespuestas = [];
+
+			preguntas.forEach((preguntaActual, numeroDePregunta) =>
+			{
+
+				const respuestas = [];
+
+				for (letraRespuesta in preguntaActual.respuestas)
+				{
+
+					respuestas.push(
+
+						`
+        <label>
+                  <input type="radio" name="${numeroDePregunta}" value="${letraRespuesta}" />
+                  ${letraRespuesta} : ${preguntaActual.respuestas[letraRespuesta]} <br>
+              </label>` 
+					);
+                   
+				}
+
+				preguntasYrespuestas.push(
+					`
+      <div class="cuestion">${preguntaActual.pregunta}</div>
+      
+          <div class="respuestas"> ${respuestas.join("")} </div>
+          `
+				);
+			});
+
+			contenedor.innerHTML = preguntasYrespuestas.join("");
+		}
+
+		mostrarTest();
+
+		function mostrarResultado()
+		{
+			const respuestas = contenedor.querySelectorAll(".respuestas");
+			let respuestasCorrectas = 0;
+
+			preguntas.forEach((preguntaActual, numeroDePregunta) =>
+			{
+				const todasLasRespuestas = respuestas[numeroDePregunta];
+				const checkboxRespuestas = `input[name='${numeroDePregunta}']:checked`;
+				const respuestaElegida = (
+					todasLasRespuestas.querySelector(checkboxRespuestas) ||
+					{}
+				).value;
+
+				if (respuestaElegida === preguntaActual.respuestaCorrecta)
+				{
+					respuestasCorrectas++;
+
+					respuestas[numeroDePregunta].style.color = "blue";
+				}
+				else
+				{
+					respuestas[numeroDePregunta].style.color = "red";
+				}
+			});
+
+			resultadoTest.innerHTML =
+				"Usted ha acertado " +
+				respuestasCorrectas +
+				" preguntas de un total de " +
+				preguntas.length;
+		}
+
+		botonRes.addEventListener("click", mostrarResultado);
+
+	</script>
+       </div>
+
+</fieldset>
+</body>
+</html>
